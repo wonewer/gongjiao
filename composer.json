@@ -1,0 +1,15 @@
+{
+    "name": "wonewer/gongjiao",
+    "require-dev": {
+        "vdb/php-spider": "^0.3.0",
+        "fluentdom/fluentdom": "^6.0"
+    },
+    "authors": [
+        {
+            "name": "yuanliangchen",
+            "email": "yuanliangchen@dotfashion.cn"
+        }
+    ],
+    "require": {
+    }
+}
