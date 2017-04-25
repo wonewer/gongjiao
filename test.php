@@ -32,18 +32,13 @@ function getData($client, $send)
     );
     foreach ($document('//div[@class=\'time_list_li\']') as $div) {
         $str = trim($div->textContent);
-//        echo $str.PHP_EOL;
-        if (strpos('不', $str) !== false) {
-            if (file_exists('1.txt')) {
-
-            } else {
-                sendMsg($send);
-                file_put_contents('1.txt', '1111');
-            }
+        if (strpos($str,'不可预约') === false) {
+            sendMsg($send);
             $div = null;
             unset($div);
             $str = null;
             unset($str);
+            exit();
             break;
         }
     }
@@ -91,4 +86,3 @@ function getUsage()
 {
     echo memory_get_usage().PHP_EOL;
 }
-
