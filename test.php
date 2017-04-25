@@ -32,7 +32,7 @@ function getData($client, $send)
     );
     foreach ($document('//div[@class=\'time_list_li\']') as $div) {
         $str = trim($div->textContent);
-        echo $str;
+//        echo $str.PHP_EOL;
         if (strpos('不', $str) !== false) {
             if (file_exists('1.txt')) {
 
@@ -40,9 +40,19 @@ function getData($client, $send)
                 sendMsg($send);
                 file_put_contents('1.txt', '1111');
             }
+            $div = null;
+            unset($div);
+            $str = null;
+            unset($str);
             break;
         }
     }
+    $document = null;
+    $login = null;
+    $res = null;
+    unset($document);
+    unset($login);
+    unset($res);
 }
 
 function sendMsg($send)
@@ -50,7 +60,7 @@ function sendMsg($send)
     try {
         $url = 'http://api.netease.im/sms/sendtemplate.action';
         $mobiles = json_encode(array(
-            "18512528601"
+            "18512528601","13855537062"
         ));
         $params = json_encode(array(
             "!!!"
@@ -68,10 +78,17 @@ function sendMsg($send)
     } catch (\GuzzleHttp\Exception\ClientException $e) {
         echo $e->getResponse()->getBody()->getContents();
     }
+    return true;
 }
 
 while (1) {
-    getData($client, $send);
-    sleep(5);
+    $a = getData($client, $send);
+    unset($a);
+    sleep(30);
+}
+
+function getUsage()
+{
+    echo memory_get_usage().PHP_EOL;
 }
 
