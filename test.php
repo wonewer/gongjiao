@@ -55,7 +55,7 @@ function sendMsg($send)
     try {
         $url = 'http://api.netease.im/sms/sendtemplate.action';
         $mobiles = json_encode(array(
-            "18512528601","13855537062"
+            "18512528601"
         ));
         $params = json_encode(array(
             "!!!"
