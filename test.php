@@ -30,15 +30,31 @@ function getData($client, $send)
     $document = FluentDOM::load($login, 'text/html',
         [FluentDOM\Loader\Options::ALLOW_FILE => TRUE]
     );
+    $cur = false;
+    foreach ($document('//div[@class=\'datemenu\']') as $curData) {
+        $cur = trim($curData->textContent);
+    }
+
     foreach ($document('//div[@class=\'time_list_li\']') as $div) {
         $str = trim($div->textContent);
         if (strpos($str,'不可预约') === false) {
+            $f= fopen("lock.lock","r");
+            while (!feof($f))
+            {
+                $line = fgets($f);
+            }
+            fclose($f);
+            if($line == $cur){
+                break;
+            }
+            if(strpos($cur,'-') > 0){
+                file_put_contents('lock.lock',$cur);
+            }
             sendMsg($send);
             $div = null;
             unset($div);
             $str = null;
             unset($str);
-            exit();
             break;
         }
     }
@@ -79,7 +95,7 @@ function sendMsg($send)
 while (1) {
     $a = getData($client, $send);
     unset($a);
-    sleep(30);
+    sleep(3);
 }
 
 function getUsage()
